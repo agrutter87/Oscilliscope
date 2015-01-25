@@ -8,6 +8,7 @@ class Window                                                                    
   int pos_X; // position of window from left
   int pos_Y; // position of window from top
   int[] data;
+  int[] graph;
   
   
   
@@ -17,9 +18,11 @@ class Window                                                                    
     size_X = int((width / numWindowsPerRow) - windowSpacing); // sets the width of the window to evenly space it to allow 'numWindowsPerRow' to fit smoothly
     size_Y = int(((height - 100) / numWindowsPerColumn) - windowSpacing); // sets the height of the window to evenly space it to allow 'numWindowsPerColumn' to fit smoothly while allowing 100px for buttons at the bottom
     data = new int[size_X];
+    graph = new int[size_X];
     for(int i = 0; i < size_X; i++)
     {
       data[i] = 0;
+      graph[i] = 0;
     }
     for(int rowNumber = 1; rowNumber <= numWindowsPerColumn; rowNumber++) // loop determines window's position on screen based on the 'layoutPosition' and 'numWindowsPerColumn' variables
     {
@@ -39,7 +42,9 @@ class Window                                                                    
     for(int i = 0; i < (size_X - 1); i++)
     {
       stroke(0);
-      line((pos_X + i),(pos_Y + size_Y - data[i]),(pos_X + i + 1),(pos_Y + size_Y - data[i + 1]));
+      graph[i] = int(map(data[i], 0, 255, 0, (size_Y - 1)));
+      graph[i + 1] = int(map(data[i + 1], 0, 255, 0, (size_Y - 1)));
+      line((pos_X + i),(pos_Y + size_Y - graph[i]),(pos_X + i + 1),(pos_Y + size_Y - graph[i + 1]));
     }
   }
 }                                                                                                                                                                          //class Window
@@ -123,8 +128,6 @@ void draw()                                                                     
     }
     window[0].data[window[0].size_X - 1] = input.read();
     input.write('G');
-    println("Data Transfer Complete");
-    println(window[0].data[window[0].size_X - 1]);
   }
   background(0);
   for(int i = 0; i < numWindows; i++)
