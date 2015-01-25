@@ -115,41 +115,17 @@ class Button                                                                    
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void draw()                                                                                                                                                              // function draw()
 {
-  
-  /*for(int i = 0; i < (window[0].size_X - 1); i++)
+  if(input.available() > 0)
   {
-    window[0].data[i] = window[0].data[i+1];
+    for(int i = 0; i < (window[0].size_X - 1); i++)
+    {
+      window[0].data[i] = window[0].data[i+1];
+    }
+    window[0].data[window[0].size_X - 1] = input.read();
+    input.write('G');
+    println("Data Transfer Complete");
+    println(window[0].data[window[0].size_X - 1]);
   }
-  window[0].data[window[0].size_X - 1] = input.read();
-  println(window[0].data[window[0].size_X - 1]);  */
-  /*byte[] inBuffer = new byte[5];
-  if (input.available() > 0)
-  {
-    for(int i = 0; i < (window[0].size_X - 1); i++)
-    {
-      window[0].data[i] = window[0].data[i+1];
-    }
-    inBuffer = input.readBytes();
-    input.readBytes(inBuffer);
-    if(inBuffer != null)
-    {
-      String myString = new String(inBuffer);
-      window[0].data[window[0].size_X - 1] = int(myString);
-      button[0].label = myString;
-      println(window[0].data[window[0].size_X - 1]);
-    }
-  }*/
-  /*int inBuffer;
-  while (input.available() > 0)
-  {
-    for(int i = 0; i < (window[0].size_X - 1); i++)
-    {
-      window[0].data[i] = window[0].data[i+1];
-    }
-    inBuffer = input.read();
-    window[0].data[window[0].size_X - 1] = inBuffer;
-  }*/
-  
   background(0);
   for(int i = 0; i < numWindows; i++)
   {
@@ -184,3 +160,4 @@ void mouseClicked()                                                             
     }
   }
 }
+
