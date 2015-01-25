@@ -3,10 +3,10 @@ import processing.serial.*;
 class Window                                                                                                                                                              //class Window
 {
   // Properties
-  float size_X; // width of window
-  float size_Y; // height of window
-  float pos_X; // position of window from left
-  float pos_Y; // position of window from top
+  int size_X; // width of window
+  int size_Y; // height of window
+  int pos_X; // position of window from left
+  int pos_Y; // position of window from top
   int[] data;
   
   
@@ -14,10 +14,10 @@ class Window                                                                    
   // Constructor
   Window(int layoutPosition)
   {
-    size_X = (width / numWindowsPerRow) - windowSpacing; // sets the width of the window to evenly space it to allow 'numWindowsPerRow' to fit smoothly
-    size_Y = ((height - 100) / numWindowsPerColumn) - windowSpacing; // sets the height of the window to evenly space it to allow 'numWindowsPerColumn' to fit smoothly while allowing 100px for buttons at the bottom
-    data = new int[int(size_X)];
-    for(int i = 0; i < int(size_X); i++)
+    size_X = int((width / numWindowsPerRow) - windowSpacing); // sets the width of the window to evenly space it to allow 'numWindowsPerRow' to fit smoothly
+    size_Y = int(((height - 100) / numWindowsPerColumn) - windowSpacing); // sets the height of the window to evenly space it to allow 'numWindowsPerColumn' to fit smoothly while allowing 100px for buttons at the bottom
+    data = new int[size_X];
+    for(int i = 0; i < size_X; i++)
     {
       data[i] = 0;
     }
@@ -25,8 +25,8 @@ class Window                                                                    
     {
       if(layoutPosition <=  rowNumber * numWindowsPerRow)
       {
-        pos_X = borderSpacing + ((layoutPosition - (numWindowsPerRow * (rowNumber - 1) + 1)) * (size_X + windowSpacing));
-        pos_Y = borderSpacing + ((windowSpacing + size_Y) * (rowNumber - 1));
+        pos_X = int(borderSpacing + ((layoutPosition - (numWindowsPerRow * (rowNumber - 1) + 1)) * (size_X + windowSpacing)));
+        pos_Y = int(borderSpacing + ((windowSpacing + size_Y) * (rowNumber - 1)));
         break;
       }
     }
@@ -36,7 +36,7 @@ class Window                                                                    
   {
     fill(color(255,255,255)); // chooses the color white for the window background
     rect(pos_X, pos_Y, size_X, size_Y); // draws the window background as a rectangle
-    for(int i = 0; i < (int(size_X) - 1); i++)
+    for(int i = 0; i < (size_X - 1); i++)
     {
       stroke(0);
       line((pos_X + i),(pos_Y + size_Y - data[i]),(pos_X + i + 1),(pos_Y + size_Y - data[i + 1]));
@@ -48,10 +48,10 @@ class Button                                                                    
 {
   //properties
   String label;
-  float size_X;
-  float size_Y;
-  float pos_X;
-  float pos_Y;
+  int size_X;
+  int size_Y;
+  int pos_X;
+  int pos_Y;
   Boolean disabled;
   
   
@@ -59,17 +59,17 @@ class Button                                                                    
   //constructor
   Button(String Text, int layoutPosition)
   {
-    size_X = (width / 9) - 20;
+    size_X = int((width / 9) - 20);
     size_Y = 30;
     if(layoutPosition < 10)
     {
       pos_X = 10 + ((layoutPosition - 1) * (size_X + 20));
-      pos_Y = (height - 90);
+      pos_Y = int((height - 90));
     }
     if(layoutPosition > 9)
     {
       pos_X = 10 + ((layoutPosition - 10) * (size_X + 20));
-      pos_Y = (height - 40);
+      pos_Y = int((height - 40));
     }
     label = Text;
     disabled = false;
@@ -120,8 +120,8 @@ void draw()                                                                     
   {
     window[0].data[i] = window[0].data[i+1];
   }
-  window[0].data[int(window[0].size_X - 1)] = input.read();
-  println(window[0].data[int(window[0].size_X - 1)]);  */
+  window[0].data[window[0].size_X - 1] = input.read();
+  println(window[0].data[window[0].size_X - 1]);  */
   /*byte[] inBuffer = new byte[5];
   if (input.available() > 0)
   {
@@ -134,9 +134,9 @@ void draw()                                                                     
     if(inBuffer != null)
     {
       String myString = new String(inBuffer);
-      window[0].data[int(window[0].size_X - 1)] = int(myString);
+      window[0].data[window[0].size_X - 1] = int(myString);
       button[0].label = myString;
-      println(window[0].data[int(window[0].size_X - 1)]);
+      println(window[0].data[window[0].size_X - 1]);
     }
   }*/
   /*int inBuffer;
@@ -147,7 +147,7 @@ void draw()                                                                     
       window[0].data[i] = window[0].data[i+1];
     }
     inBuffer = input.read();
-    window[0].data[int(window[0].size_X - 1)] = inBuffer;
+    window[0].data[window[0].size_X - 1] = inBuffer;
   }*/
   
   background(0);
