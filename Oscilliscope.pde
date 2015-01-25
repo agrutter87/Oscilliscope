@@ -8,6 +8,7 @@ class Window                                                                    
   int pos_X; // position of window from left
   int pos_Y; // position of window from top
   int[] data;
+  int[] timestamp;
   int[] graph;
   
   
@@ -19,10 +20,12 @@ class Window                                                                    
     size_Y = int(((height - 100) / numWindowsPerColumn) - windowSpacing); // sets the height of the window to evenly space it to allow 'numWindowsPerColumn' to fit smoothly while allowing 100px for buttons at the bottom
     data = new int[size_X];
     graph = new int[size_X];
+    timestamp = new int[size_X];
     for(int i = 0; i < size_X; i++)
     {
       data[i] = 0;
       graph[i] = 0;
+      timestamp[i] = 0;
     }
     for(int rowNumber = 1; rowNumber <= numWindowsPerColumn; rowNumber++) // loop determines window's position on screen based on the 'layoutPosition' and 'numWindowsPerColumn' variables
     {
@@ -92,19 +95,20 @@ class Button                                                                    
   }
 }                                                                                                                                                                         // class Button
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  int numWindows = 2;                                                                                                                                              
-  final int numButtons = 18;
-  int numWindowsPerRow = 2;
-  int numWindowsPerColumn = 1;
-  final int windowSpacing = 20;
-  final int borderSpacing = 10;
-  final String[] buttonLabel = { "button1", "button2" , "button3" , "button4" , "button5" , "button6" , "button7" , "button8" , "button9", 
+int numWindows = 2;                                                                                                                                              
+final int numButtons = 18;
+int numWindowsPerRow = 2;
+int numWindowsPerColumn = 1;
+final int windowSpacing = 20;
+final int borderSpacing = 10;
+final String[] buttonLabel = { "button1", "button2" , "button3" , "button4" , "button5" , "button6" , "button7" , "button8" , "button9", 
                               "button10", "button11", "button12", "button13", "button14", "button15", "button16", "button17", "button18" };
-  Window[] window = new Window[numWindows];
-  Button[] button = new Button[numButtons];
-  Serial input = new Serial(this, Serial.list()[0], 9600);
-  String dataString = null;
-  void setup()                                                                                                                                                              // function setup()
+Window[] window = new Window[numWindows];
+Button[] button = new Button[numButtons];
+Serial input = new Serial(this, Serial.list()[0], 9600);
+int timesize;
+
+void setup()                                                                                                                                                              // function setup()
 {
   size(1200, 600);
 
@@ -125,7 +129,17 @@ void draw()                                                                     
     for(int i = (window[0].size_X - 1); i > 0; i--)
     {
       window[0].data[i] = window[0].data[i-1];
+      window[0].timestamp[i] = window[0].timestamp[i-1];
     }
+    timesize = input.read();
+    window[0].timestamp[0] = 0;
+    for(int i = 0; i < timesize; i++)
+    {
+      window[0].timestamp[0] = window[0].timestamp[0] + input.read();
+    }
+    println(timesize);
+    //println(window[0].timestamp[0]);
+    //println(window[0].data[0]);
     window[0].data[0] = input.read();
     input.write('G');
   }
