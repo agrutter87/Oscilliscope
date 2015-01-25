@@ -42,9 +42,9 @@ class Window                                                                    
     for(int i = 0; i < (size_X - 1); i++)
     {
       stroke(0);
-      graph[i] = int(map(data[i], 0, 255, 0, (size_Y - 1)));
-      graph[i + 1] = int(map(data[i + 1], 0, 255, 0, (size_Y - 1)));
-      line((pos_X + i),(pos_Y + size_Y - graph[i]),(pos_X + i + 1),(pos_Y + size_Y - graph[i + 1]));
+      graph[size_X - 1 - i] = int(map(data[size_X - 1 - i], 0, 255, 0, (size_Y - 1)));
+      graph[size_X - 2 - i] = int(map(data[size_X - 2 - i], 0, 255, 0, (size_Y - 1)));
+      line((pos_X + i),(pos_Y + size_Y - graph[size_X - 1 - i]),(pos_X + 1 + i),(pos_Y + size_Y - graph[size_X - 2 - i]));
     }
   }
 }                                                                                                                                                                          //class Window
@@ -122,11 +122,11 @@ void draw()                                                                     
 {
   if(input.available() > 0)
   {
-    for(int i = 0; i < (window[0].size_X - 1); i++)
+    for(int i = (window[0].size_X - 1); i > 0; i--)
     {
-      window[0].data[i] = window[0].data[i+1];
+      window[0].data[i] = window[0].data[i-1];
     }
-    window[0].data[window[0].size_X - 1] = input.read();
+    window[0].data[0] = input.read();
     input.write('G');
   }
   background(0);
