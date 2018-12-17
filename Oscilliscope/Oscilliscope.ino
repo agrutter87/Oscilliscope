@@ -6,7 +6,7 @@ void setup()
 {
   stopwatch[0] = millis();
   stopwatch[1] = stopwatch[0];
-  Serial.begin(9600);
+  Serial.begin(921600);
 }
 
 void loop() 

@@ -105,7 +105,7 @@ final String[] buttonLabel = { "Record", "Play" , "button3" , "button4" , "butto
                               "button10", "button11", "button12", "button13", "button14", "button15", "button16", "button17", "button18" };
 Window[] window = new Window[numWindows];
 Button[] button = new Button[numButtons];
-Serial input = new Serial(this, Serial.list()[0], 9600);
+Serial input = new Serial(this, Serial.list()[1], 921600);
 OutputStream fileOutput;
 InputStream fileInput;
 int timesize;
@@ -269,4 +269,3 @@ void mouseClicked()                                                             
     }
   }
 }
-
